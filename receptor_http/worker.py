@@ -5,7 +5,10 @@ import aiohttp
 
 logger = logging.getLogger(__name__)
 
-
+def receptor_export(func):
+    setattr(func, "receptor_export", True)
+    return func
+    
 def configure_logger():
     receptor_logger = logging.getLogger('receptor')
     logger.setLevel(receptor_logger.level)
@@ -21,6 +24,7 @@ async def get_url(method, url, **extra_data):
     return response_text
 
 
+@receptor_export
 def execute(message, config, result_queue):
     configure_logger()
 
